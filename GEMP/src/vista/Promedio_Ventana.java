@@ -45,7 +45,7 @@ public class Promedio_Ventana extends JInternalFrame implements ActionListener, 
 {
 
     private JPanel contentPane;
-    private Promedio_Panel_Arbol panelArbol;
+    private Analisis_Panel_Arbol panelArbol;
     private DefaultListModel<Examen> listModel_examenes = new DefaultListModel<Examen>();
     private DefaultListModel<Examen> listModel_promediados = new DefaultListModel<Examen>();
     private JPanel panel_izquierda;
@@ -56,7 +56,7 @@ public class Promedio_Ventana extends JInternalFrame implements ActionListener, 
     private JList<Examen> jList_examenes;
     private JList<Examen> jList_promediados;
 
-    private Promedio_Arbol_No_Modal ventanaModal = null;
+    private Analisis_Arbol_No_Modal ventanaModal = null;
     private JScrollPane scrollPaneExamenesPromediados;
     private JPanel panelDerechaSuperior;
     private JButton btnMaximizar;
@@ -134,7 +134,7 @@ public class Promedio_Ventana extends JInternalFrame implements ActionListener, 
                                                                         .addGap(5)));
         this.panel_izquierda.setLayout(gl_panel_izquierda);
 
-        this.panelArbol = new Promedio_Panel_Arbol();
+        this.panelArbol = new Analisis_Panel_Arbol();
 
         JPanel panel_derecha = new JPanel();
         GroupLayout gl_contentPane = new GroupLayout(this.contentPane);
@@ -254,7 +254,7 @@ public class Promedio_Ventana extends JInternalFrame implements ActionListener, 
         if (e.getActionCommand().equals(Promedio_Ventana.MAXIMIZAR_ARBOL))
         {
 
-            this.ventanaModal = Promedio_Arbol_No_Modal.getInstance();
+            this.ventanaModal = Analisis_Arbol_No_Modal.getInstance();
             this.ventanaModal.setVisible(true);
 
 

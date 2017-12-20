@@ -11,19 +11,19 @@ import javax.swing.border.TitledBorder;
 
 import modelo.ArbolPerturbacion;
 
-public class Promedio_Arbol_No_Modal extends JFrame implements Interface_Arbol_Promedio
+public class Analisis_Arbol_No_Modal extends JFrame implements Interface_Arbol_Promedio
 {
-    private Promedio_Panel_Arbol miPanel=new Promedio_Panel_Arbol();
-    private static Promedio_Arbol_No_Modal instance=null;
+    private Analisis_Panel_Arbol miPanel=new Analisis_Panel_Arbol();
+    private static Analisis_Arbol_No_Modal instance=null;
 
 
-    public static Promedio_Arbol_No_Modal getInstance()
+    public static Analisis_Arbol_No_Modal getInstance()
     {
-        if(instance==null) instance=new Promedio_Arbol_No_Modal();
+        if(instance==null) instance=new Analisis_Arbol_No_Modal();
         return instance;
     }
 
-    private Promedio_Arbol_No_Modal()
+    private Analisis_Arbol_No_Modal()
     {
         super();
         
@@ -43,6 +43,15 @@ public class Promedio_Arbol_No_Modal extends JFrame implements Interface_Arbol_P
         this.miPanel.setArbol(a);
         
     }
+    public boolean isArbolProgeso()
+    {
+        return this.miPanel.isArbolProgeso();
+    }
 
+    public void setArbolProgreso(boolean valor)
+    {
+        this.miPanel.setArbolProgreso(valor);
+
+    }
 
 }

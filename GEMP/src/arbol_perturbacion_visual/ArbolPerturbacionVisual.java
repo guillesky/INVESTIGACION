@@ -46,15 +46,26 @@ public abstract class ArbolPerturbacionVisual extends ArbolVisual
     private Color colorLineasRelacionalesOrigen = Color.cyan;
     private Color colorLineasRelacionalesDestino = Color.red;
     private Color colorFondoCapa2;
-    private int tamFlecha=20;
+    private int tamFlecha = 20;
     private DialogoNodo dialogoNodo = DialogoNodo.getInstance();
     private JPopupMenu mipop = new JPopupMenu();
     private JMenuItem menuItemDetalle = new JMenuItem("Detalle del Nodo");
     private JMenuItem menuItemCaptura = new JMenuItem("Captura Pantalla");
     private ActionListener actionlistener;
-    private static final String CAPTURA="CAPTURA";
-    private static final String DETALLE="DETALLE";
+    private static final String CAPTURA = "CAPTURA";
+    private static final String DETALLE = "DETALLE";
+    private boolean arbolProgreso = false;
 
+
+    public void setArbolProgreso(boolean arbolProgreso)
+    {
+        this.arbolProgreso = arbolProgreso;
+    }
+
+    public boolean isArbolProgreso()
+    {
+        return arbolProgreso;
+    }
 
     public void setTamFlecha(int tamFlecha)
     {
@@ -102,15 +113,14 @@ public abstract class ArbolPerturbacionVisual extends ArbolVisual
             // TODO Implement this method
 
             Iterator<NodoVisual> nodosVisuales = ArbolPerturbacionVisual.this.iteratorNodosVisuales();
-            
+
             if (ArbolPerturbacionVisual.this.colorFondoCapa2 != null)
             {
                 g.setColor(ArbolPerturbacionVisual.this.colorFondoCapa2);
                 g.fillRect(0, 0, this.getWidth(), this.getHeight());
             }
-            
-            
-            
+
+
             while (nodosVisuales.hasNext())
             {
                 NodoVisual origen = nodosVisuales.next();
@@ -147,18 +157,15 @@ public abstract class ArbolPerturbacionVisual extends ArbolVisual
                                 else
                                     colorDestino = ArbolPerturbacionVisual.this.colorLineasRelacionalesDestino;
 
-                              
-                                   UtilGraphics.flecha(g,
-                                                          origen.getX() +
-                                                          ArbolPerturbacionVisual.this.getAnchoNodo() / 2,
-                                                          origen.getY() +
-                                                          ArbolPerturbacionVisual.this.getAltoNodo() / 2,
-                                                          destino.getX() +
-                                                          ArbolPerturbacionVisual.this.getAnchoNodo() / 2,
-                                                          destino.getY() +
-                                                          ArbolPerturbacionVisual.this.getAltoNodo() / 2, colorOrigen,
-                                                          colorDestino, ArbolPerturbacionVisual.this.getAnchoNodo(),ArbolPerturbacionVisual.this.getAltoNodo(),tamFlecha,100); 
-                                
+
+                                UtilGraphics.flecha(g, origen.getX() + ArbolPerturbacionVisual.this.getAnchoNodo() / 2,
+                                                    origen.getY() + ArbolPerturbacionVisual.this.getAltoNodo() / 2,
+                                                    destino.getX() + ArbolPerturbacionVisual.this.getAnchoNodo() / 2,
+                                                    destino.getY() + ArbolPerturbacionVisual.this.getAltoNodo() / 2,
+                                                    colorOrigen, colorDestino,
+                                                    ArbolPerturbacionVisual.this.getAnchoNodo(),
+                                                    ArbolPerturbacionVisual.this.getAltoNodo(), tamFlecha, 100);
+
                             }
                         }
                     }
@@ -177,7 +184,7 @@ public abstract class ArbolPerturbacionVisual extends ArbolVisual
         this.setLienzo(new LienzoRelacional());
         this.arbolListener = new ArbolPerturbacionListener();
         this.configuraPopUp();
-        this.colorFondoCapa2=super.getColorFondo();
+        this.colorFondoCapa2 = super.getColorFondo();
         super.setColorFondo(null);
     }
 
@@ -187,7 +194,7 @@ public abstract class ArbolPerturbacionVisual extends ArbolVisual
         this.setLienzo(new LienzoRelacional());
         this.arbolListener = new ArbolPerturbacionListener();
         this.configuraPopUp();
-        this.colorFondoCapa2=super.getColorFondo();
+        this.colorFondoCapa2 = super.getColorFondo();
         super.setColorFondo(null);
     }
 
@@ -197,9 +204,9 @@ public abstract class ArbolPerturbacionVisual extends ArbolVisual
         this.setLienzo(new LienzoRelacional());
         this.arbolListener = new ArbolPerturbacionListener();
         this.configuraPopUp();
-        this.colorFondoCapa2=super.getColorFondo();
-               super.setColorFondo(null);
-           }
+        this.colorFondoCapa2 = super.getColorFondo();
+        super.setColorFondo(null);
+    }
 
     @Override
     protected void dibujaNodoVisual(NodoVisual nodoVisual, Graphics g)
@@ -211,7 +218,17 @@ public abstract class ArbolPerturbacionVisual extends ArbolVisual
         {
             if (!nodo.isCero())
             {
-                Color color = this.paleta.getColor(nodo.getNota());
+                double valor;
+                if (this.arbolProgreso)
+                {
+                    valor = -nodo.getDesconocido()-nodo.getParcialmenteConocido()+nodo.getConocido()+nodo.getAprendido()+2;
+                    valor=valor/4.0;
+                    
+                    
+                } else
+                    valor = nodo.getNota();
+
+                Color color = this.paleta.getColor(valor);
                 nodoVisual.setColorRelleno(color);
                 nodoVisual.setColorBorde(color.darker());
             }
@@ -272,7 +289,7 @@ public abstract class ArbolPerturbacionVisual extends ArbolVisual
         this.mipop.add(this.menuItemCaptura);
         this.menuItemDetalle.setActionCommand(ArbolPerturbacionVisual.DETALLE);
         this.menuItemCaptura.setActionCommand(ArbolPerturbacionVisual.CAPTURA);
-        
+
         this.setComponentPopupMenu(this.mipop);
 
         this.actionlistener = new ActionListener()
@@ -303,12 +320,12 @@ public abstract class ArbolPerturbacionVisual extends ArbolVisual
 
         this.menuItemDetalle.addActionListener(this.actionlistener);
         this.menuItemCaptura.addActionListener(this.actionlistener);
-        
+
         this.addActionListener(actionlistener);
         this.setComponentPopupMenu(mipop);
     }
-    
-    
+
+
     private void captura()
     {
         Runnable r = new Runnable()
@@ -317,18 +334,19 @@ public abstract class ArbolPerturbacionVisual extends ArbolVisual
             public void run()
             {
                 BufferedImage imagen;
-                
-                    imagen = getScreenShot(ArbolPerturbacionVisual.this.getLienzo());
+
+                imagen = getScreenShot(ArbolPerturbacionVisual.this.getLienzo());
                 JFileChooser chooser = new JFileChooser();
                 FileNameExtensionFilter filter = new FileNameExtensionFilter("Imagenes PNG", "png");
                 chooser.setFileFilter(filter);
                 int returnVal = chooser.showSaveDialog(ArbolPerturbacionVisual.this);
                 if (returnVal == JFileChooser.APPROVE_OPTION)
-                {String nombreArch= chooser.getSelectedFile().getAbsolutePath();
-                 
+                {
+                    String nombreArch = chooser.getSelectedFile().getAbsolutePath();
+
                     try
                     {
-                        File archivo = new File( nombreArch+".png");
+                        File archivo = new File(nombreArch + ".png");
                         ImageIO.write(imagen, "png", archivo);
                     } catch (IOException e)
                     {
@@ -341,7 +359,7 @@ public abstract class ArbolPerturbacionVisual extends ArbolVisual
         SwingUtilities.invokeLater(r);
 
     }
-    
+
     private static BufferedImage getScreenShot(Component component)
     {
         component.setSize(component.getPreferredSize());
@@ -355,7 +373,7 @@ public abstract class ArbolPerturbacionVisual extends ArbolVisual
     @Override
     public void setColorFondo(Color colorFondo)
     {
-        this.colorFondoCapa2=colorFondo;
+        this.colorFondoCapa2 = colorFondo;
     }
 
     @Override

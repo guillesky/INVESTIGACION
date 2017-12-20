@@ -16,7 +16,7 @@ import javax.swing.tree.TreeModel;
 import modelo.ArbolPerturbacion;
 import modelo.NodoPerturbacion;
 
-public class Promedio_Panel_Arbol extends JPanel implements ActionListener,Interface_Arbol_Promedio
+public class Analisis_Panel_Arbol extends JPanel implements ActionListener, Interface_Arbol_Promedio
 {
     private JPanel panel_centro = new JPanel();
     private JPanel panel_sur = new JPanel();
@@ -25,7 +25,7 @@ public class Promedio_Panel_Arbol extends JPanel implements ActionListener,Inter
     private static final String OCULTOS = "OCULTOS";
 
 
-    public Promedio_Panel_Arbol()
+    public Analisis_Panel_Arbol()
     {
         this.iniciaGraficos();
     }
@@ -40,21 +40,22 @@ public class Promedio_Panel_Arbol extends JPanel implements ActionListener,Inter
         this.panel_centro.setLayout(new BorderLayout(0, 0));
         this.panel_centro.add(this.jTree_Arbol_Perturbacion, BorderLayout.CENTER);
         this.chckbxVerNodosOcultos.addActionListener(this);
-        this.chckbxVerNodosOcultos.setActionCommand(Promedio_Panel_Arbol.OCULTOS);
+        this.chckbxVerNodosOcultos.setActionCommand(Analisis_Panel_Arbol.OCULTOS);
         this.jTree_Arbol_Perturbacion.setLineasRectas(true);
-        this.jTree_Arbol_Perturbacion.setColorFondo(new Color(230,230,230));
+        this.jTree_Arbol_Perturbacion.setColorFondo(new Color(230, 230, 230));
     }
 
     @Override
     public void actionPerformed(ActionEvent e)
     {
-        if (e.getActionCommand().equals(Promedio_Panel_Arbol.OCULTOS))
+        if (e.getActionCommand().equals(Analisis_Panel_Arbol.OCULTOS))
         {
             this.jTree_Arbol_Perturbacion.setMuestraNodosOcultos(!this.jTree_Arbol_Perturbacion.isMuestraNodosOcultos());
 
         }
     }
-@Override
+
+    @Override
     public void setArbol(ArbolPerturbacion a)
     {
         if (a != null)
@@ -74,12 +75,24 @@ public class Promedio_Panel_Arbol extends JPanel implements ActionListener,Inter
     @Override
     public void setVisible(boolean aFlag)
     {
-        
+
         this.jTree_Arbol_Perturbacion.setVisible(aFlag);
     }
 
 
     void setNodoSeleccionado(NodoPerturbacion nodosel)
-    {this.jTree_Arbol_Perturbacion.setNodoSeleccionado(nodosel);
+    {
+        this.jTree_Arbol_Perturbacion.setNodoSeleccionado(nodosel);
+    }
+
+    public boolean isArbolProgeso()
+    {
+        return this.jTree_Arbol_Perturbacion.isArbolProgreso();
+    }
+
+    public void setArbolProgreso(boolean valor)
+    {
+        this.jTree_Arbol_Perturbacion.setArbolProgreso(valor);
+
     }
 }

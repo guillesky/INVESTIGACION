@@ -7,6 +7,18 @@ import java.util.ArrayList;
 public class Paleta
 {
     private ArrayList<Color> colores;
+    private Color colorDefault=Color.gray;
+
+
+    public void setColorDefault(Color colorDefault)
+    {
+        this.colorDefault = colorDefault;
+    }
+
+    public Color getColorDefault()
+    {
+        return colorDefault;
+    }
 
     public Paleta(ArrayList<Color> colores)
     {
@@ -25,7 +37,7 @@ public class Paleta
 
     public Color getColor(double valor)
     {
-        Color respuesta = null;
+        Color respuesta = this.colorDefault;
         if (this.colores != null && this.colores.size() > 0)
             if (this.colores.size() == 1)
                 respuesta = this.colores.get(0);

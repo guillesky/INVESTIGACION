@@ -95,6 +95,7 @@ public class NodoPerturbacionEvaluable extends NodoPerturbacion
         if (this.tieneHijoEvaluable())
         {
             EtiquetaBean etiqueta = getEtiqueta();
+            etiqueta.inicializar();
             Enumeration hijos = children();
             int cantidad_hijos_ev = this.contarHijosEvaluados();
             while (hijos.hasMoreElements())

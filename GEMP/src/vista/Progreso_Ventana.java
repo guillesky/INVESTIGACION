@@ -44,7 +44,7 @@ public class Progreso_Ventana extends JInternalFrame implements ActionListener, 
 {
 
     private JPanel contentPane;
-    private Promedio_Panel_Arbol panelArbol;
+    private Analisis_Panel_Arbol panelArbol;
     private DefaultListModel<Alumno> listModel_alumnos = new DefaultListModel<Alumno>();
    // private DefaultListModel<Examen> listModel_promediados = new DefaultListModel<Examen>();
     private DefaultListModel<Instancia_Evaluacion> listModel_instancias = new DefaultListModel<Instancia_Evaluacion>();
@@ -55,7 +55,7 @@ public class Progreso_Ventana extends JInternalFrame implements ActionListener, 
     private JList<Alumno> jList_alumnos;
    // private JList<Examen> jList_promediados;
     private JList<Instancia_Evaluacion> jList_instancias;
-    private Promedio_Arbol_No_Modal ventanaModal = null;
+    private Analisis_Arbol_No_Modal ventanaNoModal = null;
     //private JScrollPane scrollPaneExamenesPromediados;
     private JScrollPane scrollPaneInstancias;
     private JButton btnMaximizar;
@@ -141,7 +141,8 @@ public class Progreso_Ventana extends JInternalFrame implements ActionListener, 
         this.panel_izquierda.setLayout(groupLayout);
 
 
-        this.panelArbol = new Promedio_Panel_Arbol();
+        this.panelArbol = new Analisis_Panel_Arbol();
+        this.panelArbol.setArbolProgreso(true);
 
         JPanel panel_derecha = new JPanel();
         GroupLayout gl_contentPane = new GroupLayout(this.contentPane);
@@ -268,14 +269,15 @@ public class Progreso_Ventana extends JInternalFrame implements ActionListener, 
         if (e.getActionCommand().equals(Progreso_Ventana.MAXIMIZAR_ARBOL))
         {
 
-            this.ventanaModal = Promedio_Arbol_No_Modal.getInstance();
-            this.ventanaModal.setVisible(true);
+            this.ventanaNoModal = Analisis_Arbol_No_Modal.getInstance();
+            this.ventanaNoModal.setVisible(true);
+            this.ventanaNoModal.setArbolProgreso(true);
 
 
-            this.interface_Arbol = this.ventanaModal;
+            this.interface_Arbol = this.ventanaNoModal;
             this.interface_Arbol.setArbol(arbol_resultante);
             this.panelArbol.setVisible(false);
-            this.ventanaModal.addWindowListener(new WindowAdapter()
+            this.ventanaNoModal.addWindowListener(new WindowAdapter()
             {
 
 
