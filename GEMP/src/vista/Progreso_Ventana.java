@@ -398,7 +398,7 @@ public class Progreso_Ventana extends JInternalFrame implements ActionListener, 
             if (examen1 != null && examen1.getArbol_podado_particular().isCorregido() && examen2 != null &&
                 examen2.getArbol_podado_particular().isCorregido())
             {
-                this.arbol_resultante = examen2.getArbol_podado_particular().clone();
+                this.arbol_resultante = examen2.getArbol_podado_particular().clone().toProgreso();
                 try
                 {
                     this.arbol_resultante.resta(examen1.getArbol_podado_particular());

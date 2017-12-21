@@ -92,7 +92,7 @@ public class NodoPerturbacion extends DefaultMutableTreeNode implements IConjunt
         return getDato().getEtiquetaBean();
     }
 
-    private DatoBean getDato()
+    protected DatoBean getDato()
     {
         return (DatoBean) getUserObject();
     }

@@ -46,7 +46,7 @@ public class NodoPerturbacionEvaluable extends NodoPerturbacion
         super(object, b);
     }
 
-    public NodoPerturbacionEvaluable(NodoPerturbacion base)
+      public NodoPerturbacionEvaluable(NodoPerturbacion base)
     {
 
         this(base.getUserObject());
@@ -55,7 +55,7 @@ public class NodoPerturbacionEvaluable extends NodoPerturbacion
             {
                 this.add(new NodoPerturbacionEvaluable((NodoPerturbacion) base.getChildAt(i)));
             }
-    }
+    } 
 
 
     public NodoPerturbacionEvaluable(NodoPerturbacion base,

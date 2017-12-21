@@ -260,6 +260,40 @@ public class ArbolPerturbacion implements Serializable, Cloneable
 
 
     }
+    
+    
+    
+    public ArbolPerturbacion toProgreso()
+    {
+        ArbolPerturbacion nuevo = new ArbolPerturbacion(this.getNombre(), this.getDescripcion());
+        HashMap<NodoPerturbacionEvaluable, NodoPerturbacionProgreso> hashmap =
+            new HashMap<NodoPerturbacionEvaluable, NodoPerturbacionProgreso>();
+        NodoPerturbacionProgreso raizEvaluada = new NodoPerturbacionProgreso((NodoPerturbacionEvaluable)this.getRaiz(), hashmap);
+        nuevo.setRaiz(raizEvaluada);
+        Iterator<NodoPerturbacionEvaluable> iterator_nodos = hashmap.keySet().iterator();
+
+
+        while (iterator_nodos.hasNext())
+        {
+            NodoPerturbacion n = iterator_nodos.next();
+            Iterator<RelacionImpacto> it_relaciones = n.iteratorImpactos();
+            while (it_relaciones.hasNext())
+            {
+                RelacionImpacto rel = it_relaciones.next();
+                hashmap.get(n).addImpacto(new RelacionImpacto(hashmap.get(rel.getNodo()), rel.getValor()));
+
+            }
+
+
+        }
+
+
+        return nuevo;
+
+
+    }
+    
+    
 
     public void suma(ArbolPerturbacion sumando) throws NotSemejanteException
     {
